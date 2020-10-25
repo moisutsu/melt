@@ -15,4 +15,6 @@ fn test_get_extention() {
         get_extention("sample.rs.gz".to_string()),
         Ext::Other("rs.gz".to_string())
     );
+    assert_eq!(get_extention("sample".to_string()), Ext::Other("".to_string()));
+    assert_eq!(get_extention(".sample".to_string()), Ext::Other("".to_string()));
 }
