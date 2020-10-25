@@ -23,7 +23,7 @@ impl InnerExtension for Path {
     }
 }
 
-pub fn get_extention(file_name: String) -> Ext {
+pub fn get_extention(file_name: &String) -> Ext {
     let file_path = Path::new(&file_name);
 
     match file_path.extension() {
