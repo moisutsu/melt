@@ -1,8 +1,6 @@
 <h1 align="center">Welcome to melt 👋</h1>
 <p>
-  <a href="https://www.npmjs.com/package/melt" target="_blank">
-    <img alt="Version" src="https://img.shields.io/npm/v/melt.svg">
-  </a>
+  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/moisutsu/melt/blob/master/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
