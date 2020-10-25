@@ -44,7 +44,13 @@ fn decompress_tar_xz(file_name: &String) -> Result<()> {
 }
 
 fn print_output(output: std::process::Output) -> Result<()> {
-    println!("{}", String::from_utf8(output.stdout)?);
-    println!("{}", String::from_utf8(output.stderr)?);
+    let output_to_stdout = String::from_utf8(output.stdout)?;
+    let output_to_stderr = String::from_utf8(output.stderr)?;
+    if !output_to_stdout.is_empty() {
+        println!("{}", output_to_stdout);
+    }
+    if !output_to_stderr.is_empty() {
+        println!("{}", output_to_stderr);
+    }
     Ok(())
 }
