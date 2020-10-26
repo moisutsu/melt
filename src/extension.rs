@@ -23,23 +23,26 @@ impl InnerExtension for Path {
     }
 }
 
-pub fn get_extention(file_name: &String) -> Ext {
+pub fn get_extention(file_name: &String) -> Option<Ext> {
     let file_path = Path::new(&file_name);
 
-    match file_path.extension() {
-        Some(outer_extention) => match outer_extention.to_str().unwrap() {
-            "tar" => Ext::Tar,
-            "zip" => Ext::Zip,
-            outer_ext if ["gz", "bz2", "xz"].contains(&outer_ext) => {
-                match &file_path.inner_extention().unwrap()[..] {
-                    "tar" if outer_ext == "gz" => Ext::TarGz,
-                    "tar" if outer_ext == "bz2" => Ext::TarBz2,
-                    "tar" if outer_ext == "xz" => Ext::TarXz,
-                    inner_ext => Ext::Other(format!("{}.{}", inner_ext, outer_ext)),
+    let outer_extention = file_path.extension()?.to_str()?;
+    let ret_extention = match outer_extention {
+        "tar" => Ext::Tar,
+        "zip" => Ext::Zip,
+        _ if ["gz", "bz2", "xz"].contains(&outer_extention) => {
+            if let Some(inner_extention) = file_path.inner_extention() {
+                match &inner_extention[..] {
+                    "tar" if outer_extention == "gz" => Ext::TarGz,
+                    "tar" if outer_extention == "bz2" => Ext::TarBz2,
+                    "tar" if outer_extention == "xz" => Ext::TarXz,
+                    _ => Ext::Other(format!("{}.{}", inner_extention, outer_extention)),
                 }
+            } else {
+                Ext::Other(outer_extention.to_string())
             }
-            ext => Ext::Other(ext.to_string()),
-        },
-        None => Ext::Other("".to_string()),
-    }
+        }
+        _ => Ext::Other(outer_extention.to_string()),
+    };
+    Some(ret_extention)
 }

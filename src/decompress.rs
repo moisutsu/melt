@@ -4,12 +4,13 @@ use std::process::Command;
 
 pub fn decompress(file_name: String) -> Result<()> {
     match get_extention(&file_name) {
-        Zip => Ok(decompress_zip(&file_name)?),
-        Tar => Ok(decompress_tar(&file_name)?),
-        TarGz => Ok(decompress_tar_gz(&file_name)?),
-        TarBz2 => Ok(decompress_tar_bz2(&file_name)?),
-        TarXz => Ok(decompress_tar_xz(&file_name)?),
-        Other(ext) => Err(anyhow!(format!("The extension {} is not supported.", ext))),
+        Some(Zip) => Ok(decompress_zip(&file_name)?),
+        Some(Tar) => Ok(decompress_tar(&file_name)?),
+        Some(TarGz) => Ok(decompress_tar_gz(&file_name)?),
+        Some(TarBz2) => Ok(decompress_tar_bz2(&file_name)?),
+        Some(TarXz) => Ok(decompress_tar_xz(&file_name)?),
+        Some(Other(ext)) => Err(anyhow!(format!("The extension {} is not supported.", ext))),
+        None => Err(anyhow!("The file must have an extension.")),
     }
 }
 
