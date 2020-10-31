@@ -2,7 +2,7 @@ use crate::{get_extention, Ext::*};
 use anyhow::{anyhow, Result};
 use std::process::Command;
 
-pub fn decompress(file_name: String) -> Result<()> {
+pub fn decompress(file_name: &String) -> Result<()> {
     if let Some(file_extention) = get_extention(&file_name) {
         match file_extention {
             Zip => decompress_zip(&file_name),

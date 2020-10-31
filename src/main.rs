@@ -4,6 +4,6 @@ use melt::{decompress, Opts};
 
 fn main() -> Result<()> {
     let opts = Opts::parse();
-    decompress(opts.input_file)?;
+    decompress(&opts.input_file)?;
     Ok(())
 }
