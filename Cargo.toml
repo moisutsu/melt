@@ -15,3 +15,5 @@ keywords = [""]
 [dependencies]
 anyhow = "1.0.33"
 clap = "3.0.0-beta.2"
+lazy_static = "1.4.0"
+maplit = "1.0.2"

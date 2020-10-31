@@ -1,6 +1,8 @@
+use lazy_static::lazy_static;
+use std::collections::HashMap;
 use std::path::Path;
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum Ext {
     TarGz,
     TarBz2,
@@ -10,39 +12,67 @@ pub enum Ext {
     Other(String),
 }
 
-trait InnerExtension {
-    fn inner_extention(&self) -> Option<String>;
-}
-
-impl InnerExtension for Path {
-    fn inner_extention(&self) -> Option<String> {
-        let inner_file_name = self.file_stem()?.to_str()?;
-        let inner_file_path = Path::new(inner_file_name);
-        let inner_extention = inner_file_path.extension()?.to_str()?;
-        Some(inner_extention.to_string())
-    }
+lazy_static! {
+    static ref EXTENTION_MAP: HashMap<String, Ext> = {
+        maplit::hashmap! {
+            "tar.gz".to_string() => Ext::TarGz,
+            "tar.bz2".to_string() => Ext::TarBz2,
+            "tar.xz".to_string() => Ext::TarXz,
+            "tar".to_string() => Ext::Tar,
+            "zip".to_string() => Ext::Zip,
+        }
+    };
 }
 
 pub fn get_extention(file_name: &String) -> Option<Ext> {
-    let file_path = Path::new(&file_name);
+    let extention = get_extention_as_string(file_name);
 
-    let outer_extention = file_path.extension()?.to_str()?;
-    let ret_extention = match outer_extention {
-        "tar" => Ext::Tar,
-        "zip" => Ext::Zip,
-        _ if ["gz", "bz2", "xz"].contains(&outer_extention) => {
-            if let Some(inner_extention) = file_path.inner_extention() {
-                match &inner_extention[..] {
-                    "tar" if outer_extention == "gz" => Ext::TarGz,
-                    "tar" if outer_extention == "bz2" => Ext::TarBz2,
-                    "tar" if outer_extention == "xz" => Ext::TarXz,
-                    _ => Ext::Other(format!("{}.{}", inner_extention, outer_extention)),
-                }
+    if extention == "".to_string() {
+        None
+    } else if EXTENTION_MAP.contains_key(&extention) {
+        Some(EXTENTION_MAP[&extention].clone())
+    } else {
+        Some(Ext::Other(extention))
+    }
+}
+
+fn get_extention_as_string(file_name: &str) -> String {
+    let mut return_extention = "".to_string();
+    let mut remain_file_name = file_name.to_string();
+
+    'outer: loop {
+        // Update `return_extention` and `remain_file_name`
+        // If `remain_file_name` has no extention, return `return_extention`
+        let remain_file_path = Path::new(&remain_file_name);
+        if let Some(extention) = remain_file_path.extension() {
+            return_extention = if return_extention == "".to_string() {
+                extention.to_str().unwrap().to_string()
             } else {
-                Ext::Other(outer_extention.to_string())
+                format!("{}.{}", extention.to_str().unwrap(), return_extention)
+            };
+            remain_file_name = remain_file_path
+                .file_stem()
+                .unwrap()
+                .to_str()
+                .unwrap()
+                .to_string();
+        } else {
+            return return_extention;
+        }
+
+        // If a key in `EXTENTION_MAP` is equal to `return_extention`, return `return_extention`
+        for key in EXTENTION_MAP.keys() {
+            if key == &return_extention {
+                return return_extention;
             }
         }
-        _ => Ext::Other(outer_extention.to_string()),
-    };
-    Some(ret_extention)
+
+        // If a key in `EXTENTION_MAP` contains `return_extention`, continue this loop, else return `return_extention`
+        for key in EXTENTION_MAP.keys() {
+            if key.contains(&return_extention) {
+                continue 'outer;
+            }
+        }
+        return return_extention;
+    }
 }
