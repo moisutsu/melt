@@ -10,10 +10,13 @@ pub fn decompress(file_name: &String) -> Result<()> {
             TarGz => decompress_tar_gz(&file_name),
             TarBz2 => decompress_tar_bz2(&file_name),
             TarXz => decompress_tar_xz(&file_name),
-            Other(ext) => Err(anyhow!(format!("The extension `{}` is not supported", ext))),
+            Other(ext) => Err(anyhow!(format!("The extension {} is not supported", ext))),
         }
     } else {
-        Err(anyhow!("The file must have an extension"))
+        Err(anyhow!(format!(
+            "The file {} must have an extension",
+            file_name
+        )))
     }
 }
 
