@@ -1,7 +1,7 @@
-use clap::{crate_version, Clap};
+use clap::{crate_authors, crate_version, Clap};
 
 #[derive(Clap)]
-#[clap(version = crate_version!(), author = "moisutsu <moisutsu@gmail.com>")]
+#[clap(version = crate_version!(), author = crate_authors!())]
 pub struct Opts {
     pub input_file: String,
 }
