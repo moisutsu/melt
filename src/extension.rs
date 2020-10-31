@@ -24,7 +24,7 @@ lazy_static! {
     };
 }
 
-pub fn get_extention(file_name: &String) -> Option<Ext> {
+pub fn get_extention(file_name: &str) -> Option<Ext> {
     let extention = get_extention_as_string(file_name);
 
     if extention == "".to_string() {
