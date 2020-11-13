@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to melt 👋</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/crates/v/melt.svg" />
   <a href="https://github.com/moisutsu/melt/blob/master/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
@@ -16,7 +16,7 @@ Supported file extensions are `zip`, `tar`, `tar.gz`, `tar.bz2` and `tar.xz`
 ## Install
 
 ```sh
-cargo install --path .
+cargo install melt
 ```
 
 ## Usage
