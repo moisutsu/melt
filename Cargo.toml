@@ -4,13 +4,13 @@ version = "0.1.0"
 authors = ["moisutsu <moisutsu@gmail.com>"]
 edition = "2018"
 description = "This is a command-line tool to decompress files of various extensions"
-repository = ""
+repository = "https://github.com/moisutsu/melt"
 license = "MIT"
 readme = "README.md"
 # see https://crates.io/category_slugs
-categories = [""]
+categories = ["command-line-utilities"]
 # see https://crates.io/keywords
-keywords = [""]
+keywords = ["cli"]
 
 [dependencies]
 anyhow = "1.0.33"
