@@ -11,6 +11,8 @@
 
 > This is a command-line tool to decompress files of various extensions
 
+Supported file extensions are `zip`, `tar`, `tar.gz`, `tar.bz2` and `tar.xz`
+
 ## Install
 
 ```sh
