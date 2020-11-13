@@ -7,7 +7,7 @@ fn main() -> Result<()> {
     let opts = Opts::parse();
     if !Path::new(&opts.input_file).exists() {
         return Err(anyhow!(format!(
-            "The file {} does not exist",
+            "The file '{}' does not exist",
             opts.input_file
         )));
     }
