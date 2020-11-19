@@ -9,8 +9,11 @@ fn test_get_extention() {
     assert_eq!(get_extention("sample.Z"), Ext::Z);
     assert_eq!(get_extention("sample.bz2"), Ext::Bz2);
     assert_eq!(get_extention("sample.tar.gz"), Ext::TarGz);
+    assert_eq!(get_extention("sample.tgz"), Ext::TarGz);
     assert_eq!(get_extention("sample.tar.Z"), Ext::TarZ);
+    assert_eq!(get_extention("sample.taz"), Ext::TarZ);
     assert_eq!(get_extention("sample.tar.bz2"), Ext::TarBz2);
+    assert_eq!(get_extention("sample.tbz2"), Ext::TarBz2);
     assert_eq!(get_extention("sample.tar.xz"), Ext::TarXz);
     assert_eq!(get_extention("sample.rs"), Ext::Other);
     assert_eq!(get_extention("sample"), Ext::Other);

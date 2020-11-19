@@ -23,8 +23,11 @@ static EXTENTION_MAP: Lazy<HashMap<String, Ext>> = Lazy::new(|| {
         "bz2".to_string() => Ext::Bz2,
         "tar".to_string() => Ext::Tar,
         "tar.gz".to_string() => Ext::TarGz,
+        "tgz".to_string() => Ext::TarGz,
         "tar.Z".to_string() => Ext::TarZ,
+        "taz".to_string() => Ext::TarZ,
         "tar.bz2".to_string() => Ext::TarBz2,
+        "tbz2".to_string() => Ext::TarBz2,
         "tar.xz".to_string() => Ext::TarXz,
     }
 });
