@@ -1,7 +1,7 @@
 use once_cell::sync::Lazy;
 use std::collections::HashMap;
 
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Ext {
     Zip,
     Gz,
@@ -34,11 +34,11 @@ static EXTENTION_MAP: Lazy<HashMap<String, Ext>> = Lazy::new(|| {
 
 // This function returns the longest matching extension
 pub fn get_extention(file_name: &str) -> Ext {
+    // If the name of the file is 'sample.a.b.c.zip', look for the extension 'a.b.c.zip' -> 'b.c.zip' -> 'c.zip' -> 'zip'
     let splited_file_name = file_name.split(".").collect::<Vec<&str>>();
     for i in 1..splited_file_name.len() {
-        let joined_extention = splited_file_name[i..].join(".");
-        if EXTENTION_MAP.keys().any(|key| key == &joined_extention) {
-            return EXTENTION_MAP[&joined_extention].clone();
+        if let Some(&extention) = EXTENTION_MAP.get(&splited_file_name[i..].join(".")) {
+            return extention;
         }
     }
     Ext::Other
