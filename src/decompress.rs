@@ -7,8 +7,10 @@ pub fn decompress(file_name: &str) -> Result<()> {
         Zip => decompress_zip(file_name),
         Gz => decompress_gz(file_name),
         Z => decompress_z(file_name),
+        Bz2 => decompress_bz2(file_name),
         Tar => decompress_tar(file_name),
         TarGz => decompress_tar_gz(file_name),
+        TarZ => decompress_tar_z(file_name),
         TarBz2 => decompress_tar_bz2(file_name),
         TarXz => decompress_tar_xz(file_name),
         Other => Err(anyhow!(format!(
@@ -33,6 +35,11 @@ fn decompress_z(file_name: &str) -> Result<()> {
     Ok(())
 }
 
+fn decompress_bz2(file_name: &str) -> Result<()> {
+    spawn_command("bunzip2", &[file_name])?;
+    Ok(())
+}
+
 fn decompress_tar(file_name: &str) -> Result<()> {
     spawn_command("tar", &["-xvf", file_name])?;
     Ok(())
@@ -40,6 +47,11 @@ fn decompress_tar(file_name: &str) -> Result<()> {
 
 fn decompress_tar_gz(file_name: &str) -> Result<()> {
     spawn_command("tar", &["-zxvf", file_name])?;
+    Ok(())
+}
+
+fn decompress_tar_z(file_name: &str) -> Result<()> {
+    spawn_command("tar", &["-Zxvf", file_name])?;
     Ok(())
 }
 
