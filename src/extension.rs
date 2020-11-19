@@ -3,21 +3,23 @@ use std::collections::HashMap;
 
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum Ext {
+    Zip,
+    Gz,
+    Tar,
     TarGz,
     TarBz2,
     TarXz,
-    Tar,
-    Zip,
     Other,
 }
 
 static EXTENTION_MAP: Lazy<HashMap<String, Ext>> = Lazy::new(|| {
     maplit::hashmap! {
+        "zip".to_string() => Ext::Zip,
+        "gz".to_string() => Ext::Gz,
+        "tar".to_string() => Ext::Tar,
         "tar.gz".to_string() => Ext::TarGz,
         "tar.bz2".to_string() => Ext::TarBz2,
         "tar.xz".to_string() => Ext::TarXz,
-        "tar".to_string() => Ext::Tar,
-        "zip".to_string() => Ext::Zip,
     }
 });
 
