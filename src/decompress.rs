@@ -3,20 +3,16 @@ use anyhow::{anyhow, Result};
 use std::process::{Command, Stdio};
 
 pub fn decompress(file_name: &str) -> Result<()> {
-    if let Some(file_extention) = get_extention(file_name) {
-        match file_extention {
-            Zip => decompress_zip(file_name),
-            Tar => decompress_tar(file_name),
-            TarGz => decompress_tar_gz(file_name),
-            TarBz2 => decompress_tar_bz2(file_name),
-            TarXz => decompress_tar_xz(file_name),
-            Other(ext) => Err(anyhow!(format!("The extension '{}' is not supported", ext))),
-        }
-    } else {
-        Err(anyhow!(format!(
-            "The file '{}' must have an extension",
+    match get_extention(file_name) {
+        Zip => decompress_zip(file_name),
+        Tar => decompress_tar(file_name),
+        TarGz => decompress_tar_gz(file_name),
+        TarBz2 => decompress_tar_bz2(file_name),
+        TarXz => decompress_tar_xz(file_name),
+        Other => Err(anyhow!(format!(
+            "The extension of the file '{}' is not supported",
             file_name
-        )))
+        ))),
     }
 }
 
