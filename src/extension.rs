@@ -5,6 +5,7 @@ use std::collections::HashMap;
 pub enum Ext {
     Zip,
     Gz,
+    Z,
     Tar,
     TarGz,
     TarBz2,
@@ -16,6 +17,7 @@ static EXTENTION_MAP: Lazy<HashMap<String, Ext>> = Lazy::new(|| {
     maplit::hashmap! {
         "zip".to_string() => Ext::Zip,
         "gz".to_string() => Ext::Gz,
+        "Z".to_string() => Ext::Z,
         "tar".to_string() => Ext::Tar,
         "tar.gz".to_string() => Ext::TarGz,
         "tar.bz2".to_string() => Ext::TarBz2,
