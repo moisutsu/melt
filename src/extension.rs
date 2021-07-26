@@ -37,7 +37,7 @@ static EXTENTION_MAP: Lazy<HashMap<String, Ext>> = Lazy::new(|| {
 // This function returns the longest matching extension
 pub fn get_extention(file_name: &str) -> Ext {
     // If the name of the file is 'sample.a.b.c.zip', look for the extension 'a.b.c.zip' -> 'b.c.zip' -> 'c.zip' -> 'zip'
-    let splited_file_name = file_name.split(".").collect::<Vec<&str>>();
+    let splited_file_name = file_name.split('.').collect::<Vec<&str>>();
     for i in 1..splited_file_name.len() {
         if let Some(&extention) = EXTENTION_MAP.get(&splited_file_name[i..].join(".")) {
             return extention;
