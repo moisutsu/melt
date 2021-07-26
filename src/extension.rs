@@ -16,20 +16,22 @@ pub enum Ext {
 }
 
 static EXTENTION_MAP: Lazy<HashMap<String, Ext>> = Lazy::new(|| {
-    maplit::hashmap! {
-        "zip".to_string() => Ext::Zip,
-        "gz".to_string() => Ext::Gz,
-        "Z".to_string() => Ext::Z,
-        "bz2".to_string() => Ext::Bz2,
-        "tar".to_string() => Ext::Tar,
-        "tar.gz".to_string() => Ext::TarGz,
-        "tgz".to_string() => Ext::TarGz,
-        "tar.Z".to_string() => Ext::TarZ,
-        "taz".to_string() => Ext::TarZ,
-        "tar.bz2".to_string() => Ext::TarBz2,
-        "tbz2".to_string() => Ext::TarBz2,
-        "tar.xz".to_string() => Ext::TarXz,
-    }
+    vec![
+        ("zip".to_string(), Ext::Zip),
+        ("gz".to_string(), Ext::Gz),
+        ("Z".to_string(), Ext::Z),
+        ("bz2".to_string(), Ext::Bz2),
+        ("tar".to_string(), Ext::Tar),
+        ("tar.gz".to_string(), Ext::TarGz),
+        ("tgz".to_string(), Ext::TarGz),
+        ("tar.Z".to_string(), Ext::TarZ),
+        ("taz".to_string(), Ext::TarZ),
+        ("tar.bz2".to_string(), Ext::TarBz2),
+        ("tbz2".to_string(), Ext::TarBz2),
+        ("tar.xz".to_string(), Ext::TarXz),
+    ]
+    .into_iter()
+    .collect()
 });
 
 // This function returns the longest matching extension

@@ -15,5 +15,4 @@ keywords = ["cli"]
 [dependencies]
 anyhow = "1.0.33"
 clap = "3.0.0-beta.2"
-maplit = "1.0.2"
 once_cell = "1.5.2"
