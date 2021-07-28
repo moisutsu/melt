@@ -1,8 +1,13 @@
 use crate::{get_extention, Ext::*};
 use anyhow::{anyhow, Result};
+use std::path::Path;
 use std::process::{Command, Stdio};
 
 pub fn decompress(file_name: &str) -> Result<()> {
+    if !Path::new(file_name).exists() {
+        return Err(anyhow!(format!("The file '{}' does not exist", file_name)));
+    }
+
     match get_extention(file_name) {
         Zip => decompress_zip(file_name),
         Gz => decompress_gz(file_name),
