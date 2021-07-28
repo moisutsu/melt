@@ -32,8 +32,12 @@ cargo install melt
 
 ## Usage
 
+It automatically recognizes the file extension and calls the decompression tool internally to decompress the file.
+
 ```sh
-melt <file-name>
+melt sample.zip
+melt sample.gz
+melt sample.tar.gz
 ```
 
 ## Author
