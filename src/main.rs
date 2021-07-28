@@ -5,12 +5,13 @@ use std::path::Path;
 
 fn main() -> Result<()> {
     let opts = Opts::parse();
-    if !Path::new(&opts.input_file).exists() {
-        return Err(anyhow!(format!(
-            "The file '{}' does not exist",
-            opts.input_file
-        )));
+
+    for file in opts.files {
+        if !Path::new(&file).exists() {
+            return Err(anyhow!(format!("The file '{}' does not exist", file)));
+        }
+        decompress(&file)?;
     }
-    decompress(&opts.input_file)?;
+
     Ok(())
 }
