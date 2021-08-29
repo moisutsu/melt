@@ -11,6 +11,13 @@ pub fn decompress(file_path: &Path) -> Result<()> {
         )));
     }
 
+    if file_path.is_dir() {
+        return Err(anyhow!(format!(
+            "'{}' is a directory",
+            file_path.to_str().unwrap_or_default()
+        )));
+    }
+
     match get_extention(file_path) {
         Zip => decompress_zip(file_path),
         Gz => decompress_gz(file_path),
