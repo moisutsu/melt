@@ -5,8 +5,8 @@ use melt::{decompress, Opts};
 fn main() -> Result<()> {
     let opts = Opts::parse();
 
-    for file in opts.files {
-        decompress(&file)?;
+    for file_path in opts.file_paths {
+        decompress(&file_path)?;
     }
 
     Ok(())

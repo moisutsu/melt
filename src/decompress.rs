@@ -3,21 +3,24 @@ use anyhow::{anyhow, Result};
 use std::path::Path;
 use std::process::{Command, Stdio};
 
-pub fn decompress(file_name: &str) -> Result<()> {
-    if !Path::new(file_name).exists() {
-        return Err(anyhow!(format!("The file '{}' does not exist", file_name)));
+pub fn decompress(file_path: &Path) -> Result<()> {
+    if !file_path.exists() {
+        return Err(anyhow!(format!(
+            "The file '{}' does not exist",
+            file_path.to_str().unwrap_or_default()
+        )));
     }
 
-    match get_extention(file_name) {
-        Zip => decompress_zip(file_name),
-        Gz => decompress_gz(file_name),
-        Z => decompress_z(file_name),
-        Bz2 => decompress_bz2(file_name),
-        Tar => decompress_tar(file_name),
-        TarGz => decompress_tar_gz(file_name),
-        TarZ => decompress_tar_z(file_name),
-        TarBz2 => decompress_tar_bz2(file_name),
-        TarXz => decompress_tar_xz(file_name),
+    match get_extention(file_path) {
+        Zip => decompress_zip(file_path),
+        Gz => decompress_gz(file_path),
+        Z => decompress_z(file_path),
+        Bz2 => decompress_bz2(file_path),
+        Tar => decompress_tar(file_path),
+        TarGz => decompress_tar_gz(file_path),
+        TarZ => decompress_tar_z(file_path),
+        TarBz2 => decompress_tar_bz2(file_path),
+        TarXz => decompress_tar_xz(file_path),
         Other(extention) => Err(anyhow!(format!(
             "The extension '{}' is not supported",
             extention
@@ -25,48 +28,48 @@ pub fn decompress(file_name: &str) -> Result<()> {
     }
 }
 
-fn decompress_zip(file_name: &str) -> Result<()> {
-    spawn_command("unzip", &[file_name])?;
+fn decompress_zip(file_path: &Path) -> Result<()> {
+    spawn_command("unzip", &[file_path.to_str().unwrap_or_default()])?;
     Ok(())
 }
 
-fn decompress_gz(file_name: &str) -> Result<()> {
-    spawn_command("gunzip", &[file_name])?;
+fn decompress_gz(file_path: &Path) -> Result<()> {
+    spawn_command("gunzip", &[file_path.to_str().unwrap_or_default()])?;
     Ok(())
 }
 
-fn decompress_z(file_name: &str) -> Result<()> {
-    spawn_command("uncompress", &[file_name])?;
+fn decompress_z(file_path: &Path) -> Result<()> {
+    spawn_command("uncompress", &[file_path.to_str().unwrap_or_default()])?;
     Ok(())
 }
 
-fn decompress_bz2(file_name: &str) -> Result<()> {
-    spawn_command("bunzip2", &[file_name])?;
+fn decompress_bz2(file_path: &Path) -> Result<()> {
+    spawn_command("bunzip2", &[file_path.to_str().unwrap_or_default()])?;
     Ok(())
 }
 
-fn decompress_tar(file_name: &str) -> Result<()> {
-    spawn_command("tar", &["-xvf", file_name])?;
+fn decompress_tar(file_path: &Path) -> Result<()> {
+    spawn_command("tar", &["-xvf", file_path.to_str().unwrap_or_default()])?;
     Ok(())
 }
 
-fn decompress_tar_gz(file_name: &str) -> Result<()> {
-    spawn_command("tar", &["-zxvf", file_name])?;
+fn decompress_tar_gz(file_path: &Path) -> Result<()> {
+    spawn_command("tar", &["-zxvf", file_path.to_str().unwrap_or_default()])?;
     Ok(())
 }
 
-fn decompress_tar_z(file_name: &str) -> Result<()> {
-    spawn_command("tar", &["-Zxvf", file_name])?;
+fn decompress_tar_z(file_path: &Path) -> Result<()> {
+    spawn_command("tar", &["-Zxvf", file_path.to_str().unwrap_or_default()])?;
     Ok(())
 }
 
-fn decompress_tar_bz2(file_name: &str) -> Result<()> {
-    spawn_command("tar", &["-jxvf", file_name])?;
+fn decompress_tar_bz2(file_path: &Path) -> Result<()> {
+    spawn_command("tar", &["-jxvf", file_path.to_str().unwrap_or_default()])?;
     Ok(())
 }
 
-fn decompress_tar_xz(file_name: &str) -> Result<()> {
-    spawn_command("tar", &["-Jxvf", file_name])?;
+fn decompress_tar_xz(file_path: &Path) -> Result<()> {
+    spawn_command("tar", &["-Jxvf", file_path.to_str().unwrap_or_default()])?;
     Ok(())
 }
 
