@@ -1,6 +1,6 @@
 [package]
 name = "melt"
-version = "0.1.4"
+version = "0.1.5"
 authors = ["moisutsu <moisutsu@gmail.com>"]
 edition = "2018"
 description = "This is a command-line tool to decompress files of various extensions"
