@@ -18,9 +18,9 @@ pub fn decompress(file_name: &str) -> Result<()> {
         TarZ => decompress_tar_z(file_name),
         TarBz2 => decompress_tar_bz2(file_name),
         TarXz => decompress_tar_xz(file_name),
-        Other => Err(anyhow!(format!(
-            "The extension of the file '{}' is not supported",
-            file_name
+        Other(extention) => Err(anyhow!(format!(
+            "The extension '{}' is not supported",
+            extention
         ))),
     }
 }

@@ -1,7 +1,7 @@
 use once_cell::sync::Lazy;
 use std::collections::HashMap;
 
-#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+#[derive(Clone, Debug, Eq, PartialEq)]
 pub enum Ext {
     Zip,
     Gz,
@@ -12,7 +12,7 @@ pub enum Ext {
     TarZ,
     TarBz2,
     TarXz,
-    Other,
+    Other(String),
 }
 
 static EXTENTION_MAP: Lazy<HashMap<String, Ext>> = Lazy::new(|| {
@@ -38,10 +38,12 @@ static EXTENTION_MAP: Lazy<HashMap<String, Ext>> = Lazy::new(|| {
 pub fn get_extention(file_name: &str) -> Ext {
     // If the name of the file is 'sample.a.b.c.zip', look for the extension 'a.b.c.zip' -> 'b.c.zip' -> 'c.zip' -> 'zip'
     let splited_file_name = file_name.split('.').collect::<Vec<&str>>();
+    let mut current_extention = String::new();
     for i in 1..splited_file_name.len() {
-        if let Some(&extention) = EXTENTION_MAP.get(&splited_file_name[i..].join(".")) {
-            return extention;
+        current_extention = splited_file_name[i..].join(".");
+        if let Some(extention) = EXTENTION_MAP.get(&current_extention) {
+            return extention.clone();
         }
     }
-    Ext::Other
+    Ext::Other(current_extention)
 }

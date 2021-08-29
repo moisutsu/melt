@@ -15,7 +15,8 @@ fn test_get_extention() {
     assert_eq!(get_extention("sample.tar.bz2"), Ext::TarBz2);
     assert_eq!(get_extention("sample.tbz2"), Ext::TarBz2);
     assert_eq!(get_extention("sample.tar.xz"), Ext::TarXz);
-    assert_eq!(get_extention("sample.rs"), Ext::Other);
-    assert_eq!(get_extention("sample"), Ext::Other);
-    assert_eq!(get_extention(".sample"), Ext::Other);
+    assert_eq!(get_extention("sample.rs"), Ext::Other("rs".to_string()));
+    assert_eq!(get_extention("sample"), Ext::Other("".to_string()));
+    assert_eq!(get_extention(".sample"), Ext::Other("sample".to_string()));
+    assert_eq!(get_extention("sample."), Ext::Other("".to_string()));
 }
