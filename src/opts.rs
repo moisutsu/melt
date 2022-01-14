@@ -1,10 +1,10 @@
 use std::path::PathBuf;
 
-use clap::{crate_authors, crate_description, crate_version, Parser};
+use clap::Parser;
 
 #[derive(Parser)]
-#[clap(version = crate_version!(), author = crate_authors!(), about = crate_description!())]
+#[clap(author, version, about)]
 pub struct Opts {
-    #[clap(about = "Files to decompress", parse(from_os_str))]
+    #[clap(help = "Files to decompress", parse(from_os_str))]
     pub file_paths: Vec<PathBuf>,
 }
